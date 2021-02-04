@@ -10,4 +10,6 @@ public interface BlogMapper {
     List<Blog> queryBlogIf(Map map);
     List<Blog> queryBlogChoose(Map map);
     int updateBlog(Map map);
+    //查询第1,2,3号记录的博客
+    List<Blog> queryBlogForEach(Map map);
 }

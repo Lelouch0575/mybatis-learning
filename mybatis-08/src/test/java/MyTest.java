@@ -5,6 +5,7 @@ import com.kuang.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,13 +50,31 @@ public class MyTest {
         map.put("id", "3cb985e4555b4e23826ae0104d2b5a2b");
 //        map.put("views", 9999);
 
-//        List<Blog> blogs = mapper.queryBlogIf(map);
+        List<Blog> blogs = mapper.queryBlogIf(map);
 //        List<Blog> blogs = mapper.queryBlogChoose(map);
-//        for (Blog blog : blogs) {
-//            System.out.println(blog);
-//        }
-        mapper.updateBlog(map);
-        sqlSession.commit();
+        for (Blog blog : blogs) {
+            System.out.println(blog);
+        }
+        //mapper.updateBlog(map);
+//        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void queryBlogForEach() {
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        HashMap map = new HashMap();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        ids.add(1);
+        ids.add(2);
+        ids.add(3);
+        map.put("ids", ids);
+
+        List<Blog> blogs = mapper.queryBlogForEach(map);
+        for (Blog blog : blogs) {
+            System.out.println(blog);
+        }
         sqlSession.close();
     }
 }
